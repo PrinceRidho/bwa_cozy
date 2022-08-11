@@ -1,7 +1,27 @@
+import 'dart:js';
+
+import 'package:bwa_cozy/pages/home_page.dart';
+import 'package:bwa_cozy/pages/splash_page.dart';
 import 'package:bwa_cozy/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/facility_item.dart';
+
+final Uri _url = Uri.parse('https://goo.gl/maps/nZo4F7j8KmWUwyxH9');
+final Uri _url2 = Uri.parse('tel:+6282278479939');
+
+Future<void> _launchUrl() async {
+  if (!await launchUrl(_url)) {
+    throw 'Could not launch $_url';
+  }
+}
+
+Future<void> _launchUrl2() async {
+  if (!await launchUrl(_url2)) {
+    throw 'Could not launch $_url';
+  }
+}
 
 class DetailPage extends StatelessWidget {
   @override
@@ -236,7 +256,10 @@ class DetailPage extends StatelessWidget {
                                 fontSize: 14,
                               ),
                             ),
-                            Image.asset('assets/btn_map.png', width: 40),
+                            InkWell(
+                                onTap: _launchUrl,
+                                child: Image.asset('assets/btn_map.png',
+                                    width: 40)),
                           ],
                         ),
                       ),
@@ -249,7 +272,7 @@ class DetailPage extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(context).size.width - (2 * edge),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: _launchUrl2,
                           style: ElevatedButton.styleFrom(
                             primary: purpleColor,
                             shape: new RoundedRectangleBorder(
