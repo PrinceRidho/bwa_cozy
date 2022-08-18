@@ -31,19 +31,22 @@ class Space {
     required this.numberOfKitchens,
   });
 
-  Space.fromJson(json) {
-    id = json['id'];
-    name = json['name'];
-    city = json['city'];
-    country = json['country'];
-    imageUrl = json['image_url'];
-    price = json['price'];
-    rating = json['rating'];
-    address = json['address'];
-    phone = json['phone'];
-    mapUrl = json['map_url'];
-    numberOfBedrooms = json['number_of_bedrooms'];
-    numberOfCupboards = json['number_of_cupboards'];
-    numberOfKitchens = json['number_of_kitchens'];
+  factory Space.fromJson(Map<String, dynamic> json) {
+    return Space(
+      id: json['id'],
+      name: json['name'],
+      city: json['city'],
+      country: json['country'],
+      imageUrl: json['image_url'],
+      price: json['price'],
+      rating: json['rating'],
+      address: json['address'],
+      phone: json['phone'],
+      mapUrl: json['map_url'],
+      numberOfBedrooms: json['number_of_bedrooms'],
+      numberOfCupboards: json['number_of_cupboards'],
+      numberOfKitchens: json['number_of_kitchens'],
+      photos: json['photos'],
+    );
   }
 }
