@@ -1,7 +1,3 @@
-import 'dart:js';
-
-import 'package:bwa_cozy/pages/home_page.dart';
-import 'package:bwa_cozy/pages/splash_page.dart';
 import 'package:bwa_cozy/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';

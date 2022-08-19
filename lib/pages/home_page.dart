@@ -1,10 +1,12 @@
 import 'package:bwa_cozy/models/city.dart';
 import 'package:bwa_cozy/models/tips.dart';
+import 'package:bwa_cozy/providers/space_provider.dart';
 import 'package:bwa_cozy/theme.dart';
 import 'package:bwa_cozy/widgets/bottom_navbar_item.dart';
 import 'package:bwa_cozy/widgets/space_card.dart';
 import 'package:bwa_cozy/widgets/tips_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/space.dart';
 import '../widgets/city_card.dart';
@@ -12,6 +14,8 @@ import '../widgets/city_card.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var spaceProvider = Provider.of<SpaceProvider>(context);
+
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -110,46 +114,56 @@ class HomePage extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(left: edge),
-              child: Column(
-                children: [
-                  SpaceCard(
-                    Space(
-                      id: 1,
-                      name: 'Kuretakeso Hott',
-                      imageUrl: 'assets/space1.png',
-                      price: 52,
-                      city: 'Bandung',
-                      country: 'Germany',
-                      rating: 4,
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  SpaceCard(
-                    Space(
-                      id: 2,
-                      name: 'Roemah Nenek',
-                      imageUrl: 'assets/space2.png',
-                      price: 11,
-                      city: 'Seattle',
-                      country: 'Bogor',
-                      rating: 5,
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  SpaceCard(
-                    Space(
-                      id: 3,
-                      name: 'Darrling How',
-                      imageUrl: 'assets/space3.png',
-                      price: 20,
-                      city: 'Jakarta',
-                      country: 'Indonesia',
-                      rating: 3,
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  // NOTE : TIPS N GUIDANCE
-                ],
+              child: FutureBuilder(
+                future: spaceProvider.getRecommendedSpaces(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Column(
+                      children: [
+                        SpaceCard(
+                          Space(
+                            id: 1,
+                            name: 'Kuretakeso Hott',
+                            imageUrl: 'assets/space1.png',
+                            price: 52,
+                            city: 'Bandung',
+                            country: 'Germany',
+                            rating: 4,
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        SpaceCard(
+                          Space(
+                            id: 2,
+                            name: 'Roemah Nenek',
+                            imageUrl: 'assets/space2.png',
+                            price: 11,
+                            city: 'Seattle',
+                            country: 'Bogor',
+                            rating: 5,
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        SpaceCard(
+                          Space(
+                            id: 3,
+                            name: 'Darrling How',
+                            imageUrl: 'assets/space3.png',
+                            price: 20,
+                            city: 'Jakarta',
+                            country: 'Indonesia',
+                            rating: 3,
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        // NOTE : TIPS N GUIDANCE
+                      ],
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
               ),
             ),
             // NOTE : TIPS N GUIDANCE
