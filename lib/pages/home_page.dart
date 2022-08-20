@@ -118,46 +118,10 @@ class HomePage extends StatelessWidget {
                 future: spaceProvider.getRecommendedSpaces(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
+                    Object? data = snapshot.data;
+
                     return Column(
-                      children: [
-                        SpaceCard(
-                          Space(
-                            id: 1,
-                            name: 'Kuretakeso Hott',
-                            imageUrl: 'assets/space1.png',
-                            price: 52,
-                            city: 'Bandung',
-                            country: 'Germany',
-                            rating: 4,
-                          ),
-                        ),
-                        SizedBox(height: 30),
-                        SpaceCard(
-                          Space(
-                            id: 2,
-                            name: 'Roemah Nenek',
-                            imageUrl: 'assets/space2.png',
-                            price: 11,
-                            city: 'Seattle',
-                            country: 'Bogor',
-                            rating: 5,
-                          ),
-                        ),
-                        SizedBox(height: 30),
-                        SpaceCard(
-                          Space(
-                            id: 3,
-                            name: 'Darrling How',
-                            imageUrl: 'assets/space3.png',
-                            price: 20,
-                            city: 'Jakarta',
-                            country: 'Indonesia',
-                            rating: 3,
-                          ),
-                        ),
-                        SizedBox(height: 30),
-                        // NOTE : TIPS N GUIDANCE
-                      ],
+                      children: data!.map((item) => SpaceCard(item)).toList(),
                     );
                   }
                   return Center(
