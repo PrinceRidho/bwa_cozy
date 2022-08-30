@@ -116,12 +116,18 @@ class HomePage extends StatelessWidget {
               padding: EdgeInsets.only(left: edge),
               child: FutureBuilder(
                 future: spaceProvider.getRecommendedSpaces(),
-                builder: (context, snapshot) {
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.hasData) {
-                    Object? data = snapshot.data;
-
+                    List<Space>? data = snapshot.data;
+                    int index = 0;
                     return Column(
-                      children: data!.map((item) => SpaceCard(item)).toList(),
+                      children: data!.map((item) {
+                        index++;
+                        return Container(
+                          margin: EdgeInsets.only(top: index == 1 ? 0 : 30),
+                          child: SpaceCard(item),
+                        );
+                      }).toList(),
                     );
                   }
                   return Center(
@@ -131,6 +137,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             // NOTE : TIPS N GUIDANCE
+            SizedBox(height: 16),
             Padding(
               padding: EdgeInsets.only(left: edge),
               child: Text(
