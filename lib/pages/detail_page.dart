@@ -1,4 +1,5 @@
 import 'package:bwa_cozy/theme.dart';
+import 'package:bwa_cozy/widgets/rating_item.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/space.dart';
@@ -26,6 +27,40 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<void> showConfirmation() async {
+      return showDialog(
+        context: context,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Peringatan'),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: const <Widget>[
+                  Text(
+                    'Apakah kamu yakin ingin',
+                  ),
+                  Text('menelpon pemilik Kos?'),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: const Text('GAS!'),
+                onPressed: _launchUrl2,
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       body: SafeArea(
         bottom: false,
@@ -48,7 +83,7 @@ class DetailPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  InkWell(
+                  GestureDetector(
                     onTap: () {
                       Navigator.pop(context);
                     },
@@ -58,7 +93,9 @@ class DetailPage extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
                     child: Image.asset(
                       'assets/btn_wishlist.png',
                       width: 40,
@@ -118,33 +155,13 @@ class DetailPage extends StatelessWidget {
                               ],
                             ),
                             Row(
-                              children: [
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                SizedBox(width: 2),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                SizedBox(width: 2),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                SizedBox(width: 2),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  width: 20,
-                                ),
-                                SizedBox(width: 2),
-                                Image.asset(
-                                  'assets/icon_star.png',
-                                  color: Color(0xff989BA1),
-                                  width: 20,
-                                ),
-                              ],
+                              children: [1, 2, 3, 4, 5].map((index) {
+                                return Container(
+                                  margin: EdgeInsets.only(left: 2),
+                                  child: RatingItem(
+                                      index: index, rating: space.rating),
+                                );
+                              }).toList(),
                             ),
                           ],
                         ),
@@ -256,7 +273,7 @@ class DetailPage extends StatelessWidget {
                         height: 50,
                         width: MediaQuery.of(context).size.width - (2 * edge),
                         child: ElevatedButton(
-                          onPressed: _launchUrl2,
+                          onPressed: () => showConfirmation(),
                           style: ElevatedButton.styleFrom(
                             primary: purpleColor,
                             shape: new RoundedRectangleBorder(
